@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #000;
+}
+
+#canvas {
+    border: 3px solid #ddd;
+    position: absolute;
+    top: 61px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+header{
+    /* position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0; */
+    width: 100%;
+    color: #fff;
+    background-color: #2f4646;
+}
+
+header #btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: inherit;
+    font-size: 13px;
+}
+
+header #btns > div {
+    padding: .5em;
+    background-color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+header #btns > div span:last-child{
+    align-self: center;
+}

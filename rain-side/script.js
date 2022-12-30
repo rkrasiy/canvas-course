@@ -1,7 +1,7 @@
 
-
 const image = new Image();
-image.src = "./images/image2.jpg";
+//image.src = "./images/image3.jpg";
+image.src = "../images/image2.jpg";
 
 image.addEventListener('load', function(){
     const canvas = document.getElementById("canvas");
@@ -26,11 +26,10 @@ image.addEventListener('load', function(){
             const green = pixels.data[(y * 4 * pixels.width) + (x * 4 + 1)];
             const blue = pixels.data[(y * 4 * pixels.width) + (x * 4 + 2)];
             const brightness = calculateRelativeBrightness(red, green, blue);
-            const cell = [
-                cellBrightness = brightness,
-            ]
-
-            row.push(cell)
+            row.push( {
+                cellBrightness: brightness,
+                cellColor:`rgb(${red}, ${green}, ${blue})`
+            })
         }
         mappedImage.push(row)
     }
@@ -50,7 +49,7 @@ image.addEventListener('load', function(){
             this.y = 0;
             this.speed = 0;
             this.velocity = Math.random() * 3.5;
-            this.size = Math.random() * 1.5 + 1;
+            this.size = Math.random() * 2.5 + 0.2;
             this.position1 = Math.floor(this.y);
             this.position2 = Math.floor(this.x);
         }
@@ -58,20 +57,25 @@ image.addEventListener('load', function(){
         update(){
             this.position1 = Math.floor(this.y);
             this.position2 = Math.floor(this.x);
-            this.speed = mappedImage[this.position1][this.position2][0];
+            this.speed = mappedImage[this.position1][this.position2].cellBrightness;
             let movement = (2.5 - this.speed) + this.velocity;
 
             this.y += movement;
-            
             if(this.y >= canvas.height){
                 this.y = 0;
                 this.x = Math.random() * canvas.width;
+            }
+            this.x += movement;
+            if(this.x >= canvas.width){
+                this.x = 0;
+                this.y = Math.random() * canvas.height;
             }
         }
 
         draw(){
             ctx.beginPath();
-            ctx.fillStyle = 'white';
+          //ctx.fillStyle = 'white';
+            ctx.fillStyle = mappedImage[this.position1][this.position2].cellColor;
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill()
         }
